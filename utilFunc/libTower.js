@@ -1,15 +1,16 @@
-/*
+/********************************************************************************
 
-		construct platform for hanoi towers		
-	
-*/
+		LIBRARY FOR CREATING TOWERS
+
+*********************************************************************************/
+
 
 //const
 const { createCanvas, loadImage } = require('canvas')
 const fs = require('fs')
 
 //initiate 3 towers
-function initiateTower(canvasWidth){
+function initiateTower(){
 	let tower =[];
 	let w = 50;
 	for(i=1;i<4;i++){
@@ -28,25 +29,6 @@ function initiateTower(canvasWidth){
 	return tower;
 };
 
-//intiate stacks      **************** HAS TO BE REMOVED TMP 
-function initiateStack(stacks){
-	let actualStacks = [];
-	let w = 250;
-	for (i=0;i<stacks;i++){		
-		actualStacks.push(
-			//the graphic representation of the image
-			{
-				//the image with min(id) has max(width) ::: width = originalwidth / id
-				id : i,
-				logo: './res/stack.png',
-				currrentPosition: 1,
-				width: w/(id+1)
-			}
-		)
-	}
-	return actualStacks;
-
-};
 
 //require canvas
 function drawTowers(towerArray,targetImage,contexto,canvaso){
@@ -78,4 +60,4 @@ function resDrawing(targetImage,contexto,canvaso,canvW,canvH){
 	fs.writeFileSync(targetImage, buffer)
 };
 
-module.exports = {initiateTower,initiateStack,drawTowers,resDrawing};
+module.exports = {initiateTower,drawTowers,resDrawing};

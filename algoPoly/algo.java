@@ -1,10 +1,19 @@
+/********************************************************************************
+
+		THE ALGORITHM SOLVING TOWER OF HANOI PROBLEM
+
+*********************************************************************************/
+
 public class Algo{
 
-	// 1 == js start working && 1<._ == changes
+	// we can track movements
 	private int state;
 	//we dont really need a vector just the destination
 	private int travelVector;
 
+	//constructor
+
+	//solution
 	public void tower(int n,int source,int median, int target){
 		if(n==1){
 			//last move
@@ -32,6 +41,9 @@ public class Algo{
 	public int moving(){
 		//maybe post incrementation is better in this polyglot situation
 		return state++;
+	}
+	public int progress(){
+		return state;
 	}
 	public int destination(){
 		return travelVector;

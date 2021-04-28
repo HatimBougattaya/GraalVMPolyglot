@@ -1,40 +1,52 @@
-//the response 
+/********************************************************************************
 
-//imports
-const {initiateTower,initiateStack} = require("./utilFunc/libTower");
+		POLYGLOT FOR THE SERVER RESPONSE 
+
+*********************************************************************************/
 
 
-//initiate tower && variables
+//IMPORT
+const {initiateTower,drawTowers,resDrawing} = require("../utilFunc/libTower");
+const {initiateStack,drawStacks,loadDestination,move}= require("../utilFunc/libStack") ;
+const {drawHanoi,moveHanoi} = require("./utilFunc/drawImg");
 
+
+//REQUIRE
+const fs = require('fs');
+const { createCanvas, loadImage } = require('canvas');
+
+//INIT CANVACE
+const width = 1200;
+const height = 630;
+const canvas = createCanvas(width, height)
+const context = canvas.getContext('2d')
+
+//INIT JAVA AGENTS
 var algoBro = Java.type('Algo');
+//auditMovements
+var changes = algoBro.destination();
+var movements = algoBro.progress();
 
-var changes = algoBro.moving();
-
-//Stacks morph
-//user input
-var actualStacks =[];
-
-let stacks = 0;
-
-
-//**************************************************Event**************************************************
-//button start onclick function call services
+//INIT nJS AGENTS
+//draw and init stacks
+let actualStacks = drawHanoi(canvas,context,'./newStack.png');
+//Should be user input in NEXT VERSION 
+let stacksNum = 3;
 
 
-//stacks input && intiate the acual ones
-actualStacks = initiateTowerGraph(stacks);
 
-//Enable sync with java
+//SYNC WITH JAVA
 algoBro.watch("changes",function(id, old, cur) {
 	 //see the actual work done
 	 console.log("Changed property: ", id);
 	 console.log("Original val: ", old);
 	 console.log("New val: ", cur);
 
-	 //move and load
-
+	 //CALL MOVE FUNC
+	 moveHanoi(canvas,context,'./newStack.png',actualStacks,old,cur);
 });
 
-//lets go 
+//LETS GO
 algoBro.tower(stacks,1,2,3);
 
+//console.log("Moveent done :" + movements);
