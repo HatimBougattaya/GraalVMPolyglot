@@ -1,6 +1,7 @@
 /********************************************************************************
 
 		DRAWIMG.JS IS FOR TESTING OUR JS SIDE OF THE POLYGLOT
+		////////////////////DRAW in one image we can olso save every step in seperate images
 
 *********************************************************************************/
 
@@ -45,9 +46,18 @@ function moveHanoi(canvas,context,targetPNG,stacks,start,end){
 	loadDestination(stacks,start,end);
 	move(stacks,targetPNG,context,canvas);
 }
-
-//Test
+/*******************************************************************/
+//Test in one image we can olso save every step in seperate images
 let s = drawHanoi(canvas,context,'./newStack.png');
-//moveHanoi(canvas,context,'./newStack.png',s,1,2);
+
+moveHanoi(canvas,context,'./newStack.png',s,1,2);
+moveHanoi(canvas,context,'./newStack.png',s,1,3);
+moveHanoi(canvas,context,'./newStack.png',s,2,3);
+moveHanoi(canvas,context,'./newStack.png',s,3,1);
+//impossible move
+//console.log(s);
+moveHanoi(canvas,context,'./newStack.png',s,2,3);
+
+/*******************************************************************/
 
 module.exports = {drawHanoi,moveHanoi};

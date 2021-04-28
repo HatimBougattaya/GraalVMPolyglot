@@ -31,7 +31,7 @@ function initiateStack(stacks,canvW,canvH,towers){
 				width: w/(i+1),
 				//using 70% of the tower for stacks && leave space for spacing {(stacks +1) not stacks}
 				height: h,
-				//125 for the margin && towersdx for to place in tower on iinitail position
+				//125 for the margin && towersdx to place in tower on iinitail position
 				dx: towers[0].dx + varx -125,
 				dy: y - 20*i,
 				destination:1
@@ -59,41 +59,57 @@ function drawStacks(actualStacks,targetImage,contexto,canvaso){
 
 
 
-//get the first disc's in a row id
+//get the first disc's in a row id 
 function minANDgetBros(imagesArray,row){
 	//initalise with any value 
 	let index = imagesArray[0];
-	let found = 0;
-	
+	let found = false;
+
 	for ( i=0; i<imagesArray.length;i++){
 		switch(found){
-			case 0 :
-				if (row==imagesArray[i].currrentPosition  ){
+			case false :
+				if (row==imagesArray[i].currentPosition  ){
 					index = imagesArray[i];
+					found=true;	
 				}
-			case 1 :
-				if ((imagesArray[i].width < index.width) && row==imagesArray[i].currentPosition ){
+			case true :
+				if ((imagesArray[i].width < index.width) && row==imagesArray[i].currentPosition ){ 
 					index = imagesArray[i];
 				}
 		}
 		
 	}
 	//console.log(index);
-	return index.id;
+	
+	return [found,index.id];
 };
 
 //stacks moving theo 
 function loadDestination(stacksArray,finek,destination){
+	//check possible move
+	let truth = minANDgetBros(stacksArray,finek);
 	//pick stack with min width we should move with finek
 	//move the image
-	let targetPosition = stacksArray.findIndex(element => element.id==minANDgetBros(stacksArray,finek) );
-	//the stack we need: console.log(stacksArray[targetPosition]);
-
-	console.log("destination: "+destination);
-	stacksArray[targetPosition].destination = destination;
+	if(truth[0]==true){
+		let targetPosition = stacksArray.findIndex(element => element.id==truth[1] );
+		//the stack we need: console.log(stacksArray[targetPosition]);
+		console.log("destination: "+destination);
+		stacksArray[targetPosition].destination = destination;	
+	}
 	//the stack with his new destination : 
 	//console.log(stacksArray);
 	return stacksArray;
+};
+
+function orderDestinationTower(stacksArray,destination){
+	//IMPORTANT: sum will never be 0 since we call this function AFTER  we move an object
+	let sum = 0;
+	for (i=0;i<stacksArray.length;i++){
+		if (stacksArray[i].currentPosition==destination){
+			sum++;
+		}
+	}
+	return sum ;
 };
 
 function move(stacksArray,targetImage,contexto,canvaso) {
@@ -102,10 +118,18 @@ function move(stacksArray,targetImage,contexto,canvaso) {
 	
 	for(i=0;i<stacksArray.length;i++){
 		if(stacksArray[i].currentPosition != stacksArray[i].destination){
+			//add a rule: you cant move a disc on top of a smaller one
+/*			if (minANDgetBros(stacksArray,destination)) {}
+*/
 			finek = stacksArray[i].currentPosition;
 			destination = stacksArray[i].destination;
 			//moving with: 400*(destination-finek)
 			stacksArray[i].dx = stacksArray[i].dx + 400*(destination-finek);
+			//update current position
+			stacksArray[i].currentPosition= destination;
+			//Test rank :console.log(orderDestinationTower(stacksArray,destination));
+			//update dy
+			stacksArray[i].dy = 480 -20*(orderDestinationTower(stacksArray,destination)-1);
 		}
 	}
 
@@ -114,4 +138,4 @@ function move(stacksArray,targetImage,contexto,canvaso) {
 
 	
 
-module.exports = {initiateStack,drawStacks,loadDestination,move};
+module.exports = {initiateStack,drawStacks,loadDestination,move,orderDestinationTower};
