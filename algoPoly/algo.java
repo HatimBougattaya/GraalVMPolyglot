@@ -12,7 +12,9 @@ public class Algo{
 	private int travelVector;
 
 	//constructor
-
+	Algo(){
+		this(0,1);
+	}
 	//solution
 	public void tower(int n,int source,int median, int target){
 		if(n==1){
