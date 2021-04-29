@@ -59,13 +59,13 @@ function drawStacks(actualStacks,targetImage,contexto,canvaso){
 
 
 
-//get the first disc's in a row id 
+//Know if a row is empty && Get the first disc's in a row id 
 function minANDgetBros(imagesArray,row){
 	//initalise with any value 
 	let index = imagesArray[0];
 	let found = false;
 
-	for ( i=0; i<imagesArray.length;i++){
+	for (i=0;i<imagesArray.length;i++){
 		switch(found){
 			case false :
 				if (row==imagesArray[i].currentPosition  ){
@@ -79,16 +79,14 @@ function minANDgetBros(imagesArray,row){
 		}
 		
 	}
-	//console.log(index);
-	
 	return [found,index.id];
 };
 
 //stacks moving theo 
 function loadDestination(stacksArray,finek,destination){
 	//check possible move
+	//pick stack with min width we should move with minANDgetBros
 	let truth = minANDgetBros(stacksArray,finek);
-	//pick stack with min width we should move with finek
 	//move the image
 	if(truth[0]==true){
 		let targetPosition = stacksArray.findIndex(element => element.id==truth[1] );
@@ -102,7 +100,7 @@ function loadDestination(stacksArray,finek,destination){
 };
 
 function orderDestinationTower(stacksArray,destination){
-	//IMPORTANT: sum will never be 0 since we call this function AFTER  we move an object
+	//IMPORTANT: sum will never be 0 since we call this function AFTER  we move a stack object
 	let sum = 0;
 	for (i=0;i<stacksArray.length;i++){
 		if (stacksArray[i].currentPosition==destination){
@@ -112,28 +110,50 @@ function orderDestinationTower(stacksArray,destination){
 	return sum ;
 };
 
+//function rules()
+
 function move(stacksArray,targetImage,contexto,canvaso) {
 	let destination = 0;
 	let finek = 0;
-	
-	for(i=0;i<stacksArray.length;i++){
-		if(stacksArray[i].currentPosition != stacksArray[i].destination){
+	let tempo = [];
+	let clone =stacksArray;
+
+	for(j=0;j<stacksArray.length;j++){
+		if(stacksArray[j].currentPosition != stacksArray[j].destination){
 			//add a rule: you cant move a disc on top of a smaller one
-/*			if (minANDgetBros(stacksArray,destination)) {}
-*/
-			finek = stacksArray[i].currentPosition;
-			destination = stacksArray[i].destination;
-			//moving with: 400*(destination-finek)
-			stacksArray[i].dx = stacksArray[i].dx + 400*(destination-finek);
-			//update current position
-			stacksArray[i].currentPosition= destination;
-			//Test rank :console.log(orderDestinationTower(stacksArray,destination));
-			//update dy
-			stacksArray[i].dy = 480 -20*(orderDestinationTower(stacksArray,destination)-1);
+			tempo = minANDgetBros(stacksArray,stacksArray[j].destination);
+			//condition : there is a stack in the destination row to compare with
+			if (tempo[0]) {
+				//compare the current upper stack with upper stack in the destination row
+				//the stack with min(id) has max(width) 
+				if(tempo[1] < stacksArray[j].id ){
+					//movement
+					finek = stacksArray[j].currentPosition;
+					destination = stacksArray[j].destination;
+					//moving with: 400*(destination-finek)
+					stacksArray[j].dx = stacksArray[j].dx + 400*(destination-finek);
+					//update current position
+					stacksArray[j].currentPosition= destination;
+					//Test rank :console.log(orderDestinationTower(stacksArray,destination));
+					//update dy
+					stacksArray[j].dy = 480 -20*(orderDestinationTower(stacksArray,destination)-1);		
+				}
+
+			} else {					
+					finek = stacksArray[j].currentPosition ;
+					destination = stacksArray[j].destination;
+					//moving with: 400*(destination-finek)
+					stacksArray[j].dx = stacksArray[j].dx + 400*(destination-finek);
+					//update current position
+					stacksArray[j].currentPosition= destination;
+					//Test rank :console.log(orderDestinationTower(stacksArray,destination));
+					//update dy
+					stacksArray[j].dy = 480 -20*(orderDestinationTower(stacksArray,destination)-1);
+			}
 		}
 	}
 
-	drawStacks(stacksArray,targetImage,contexto,canvaso)
+	drawStacks(stacksArray,targetImage,contexto,canvaso);
 };
 
 	

@@ -32,12 +32,6 @@ function drawHanoi(canvaso,contexto,targetPNG) {
 	drawTowers(towersH,targetPNG,contexto,canvaso);
 	drawStacks(stacksH,targetPNG,contexto,canvaso);
 
-	//TEST: move from 1 to 2
-	/*
-	loadDestination(stacksH,1,2);
-	move(stacksH,'./newStack.png',context,canvas);
-	*/
-	//MOVE ONLY WORKS WHEN THERE IS A DESTINATION
 	return stacksH;
 }
 
@@ -51,11 +45,15 @@ function moveHanoi(canvas,context,targetPNG,stacks,start,end){
 let s = drawHanoi(canvas,context,'./newStack.png');
 
 moveHanoi(canvas,context,'./newStack.png',s,1,2);
+
+//NOT RESPECTING THE RULE : 
+moveHanoi(canvas,context,'./newStack.png',s,1,2);
+
 moveHanoi(canvas,context,'./newStack.png',s,1,3);
 moveHanoi(canvas,context,'./newStack.png',s,2,3);
 moveHanoi(canvas,context,'./newStack.png',s,3,1);
-//impossible move
-//console.log(s);
+
+//IMPOSSIBLE MOVE : 
 moveHanoi(canvas,context,'./newStack.png',s,2,3);
 
 /*******************************************************************/
