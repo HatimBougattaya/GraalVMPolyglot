@@ -4,6 +4,8 @@
 
 *********************************************************************************/
 //import org.graalvm.polyglot.*;
+import org.graalvm.polyglot.*;
+import org.graalvm.polyglot.proxy.*;
 
 public class Algo{
 
@@ -14,7 +16,8 @@ public class Algo{
 
 	//default
 	Algo(){
-		this(0,1);
+		this.state=0;
+		this.travelVector=1;
 	}
 	//solution
 	public void tower(int n,int source,int median, int target){
@@ -51,4 +54,5 @@ public class Algo{
 	public int destination(){
 		return travelVector;
 	}
+	
 }
