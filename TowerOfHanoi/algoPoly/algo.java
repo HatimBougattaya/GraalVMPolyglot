@@ -3,6 +3,7 @@
 		THE ALGORITHM SOLVING TOWER OF HANOI PROBLEM
 
 *********************************************************************************/
+//import org.graalvm.polyglot.*;
 
 public class Algo{
 
@@ -11,7 +12,7 @@ public class Algo{
 	//we dont really need a vector just the destination
 	private int travelVector;
 
-	//constructor
+	//default
 	Algo(){
 		this(0,1);
 	}

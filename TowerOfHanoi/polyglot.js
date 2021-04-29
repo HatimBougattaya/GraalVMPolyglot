@@ -8,6 +8,7 @@
 //IMPORT
 const {initiateTower,drawTowers,resDrawing} = require("../utilFunc/libTower");
 const {initiateStack,drawStacks,loadDestination,move}= require("../utilFunc/libStack") ;
+
 const {drawHanoi,moveHanoi} = require("./utilFunc/drawImg");
 
 
@@ -23,20 +24,21 @@ const context = canvas.getContext('2d')
 
 //INIT JAVA AGENTS
 var algoBro = Java.type('Algo');
+var myHanoi = new algoBro();
+
 //auditMovements
-var changes = algoBro.destination();
-var movements = algoBro.progress();
+var changes = myHanoi.destination();
+var movements = myHanoi.progress();
 
 //INIT nJS AGENTS
-//draw and init stacks
-let actualStacks = drawHanoi(canvas,context,'./newStack.png');
 //Should be user input in NEXT VERSION 
 let stacksNum = 3;
-
+//draw and init stacks
+let actualStacks = drawHanoi(canvas,context,'./newStack.png',stacksNum);
 
 
 //SYNC WITH JAVA
-algoBro.watch("changes",function(id, old, cur) {
+myHanoi.watch("changes",function(id, old, cur) {
 	 //see the actual work done
 	 console.log("Changed property: ", id);
 	 console.log("Original val: ", old);
@@ -47,6 +49,6 @@ algoBro.watch("changes",function(id, old, cur) {
 });
 
 //LETS GO
-algoBro.tower(stacks,1,2,3);
+myHanoi.tower(stacks,1,2,3);
 
 //console.log("Moveent done :" + movements);

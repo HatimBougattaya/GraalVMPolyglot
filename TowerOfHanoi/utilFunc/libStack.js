@@ -110,7 +110,7 @@ function orderDestinationTower(stacksArray,destination){
 	return sum ;
 };
 
-//function rules()
+
 
 function move(stacksArray,targetImage,contexto,canvaso) {
 	let destination = 0;

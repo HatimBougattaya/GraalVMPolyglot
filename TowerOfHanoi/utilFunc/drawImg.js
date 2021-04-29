@@ -1,6 +1,7 @@
 /********************************************************************************
 
-		DRAWIMG.JS IS FOR TESTING OUR JS SIDE OF THE POLYGLOT
+		DRAWIMG.JS IS FOR DRAWING AND TESTING OUR JS SIDE OF THE POLYGLOT
+		
 		////////////////////DRAW in one image we can olso save every step in seperate images
 
 *********************************************************************************/
@@ -20,13 +21,13 @@ const canvas = createCanvas(width, height)
 const context = canvas.getContext('2d')
 
 //Draw platform && return stacks
-function drawHanoi(canvaso,contexto,targetPNG) {
+function drawHanoi(canvaso,contexto,targetPNG,n) {
 	//initiate or res
 	resDrawing(targetPNG,contexto,canvaso,width,height);
 
 	var towersH = initiateTower();
 	console.log(towersH);
-	var stacksH = initiateStack(3,width,height,towersH);
+	var stacksH = initiateStack(n,width,height,towersH);
 	console.log(stacksH);
 
 	drawTowers(towersH,targetPNG,contexto,canvaso);
@@ -40,9 +41,14 @@ function moveHanoi(canvas,context,targetPNG,stacks,start,end){
 	loadDestination(stacks,start,end);
 	move(stacks,targetPNG,context,canvas);
 }
+
+
+
 /*******************************************************************/
+/*************************   TESTING  ******************************/
+
 //Test in one image we can olso save every step in seperate images
-let s = drawHanoi(canvas,context,'./newStack.png');
+let s = drawHanoi(canvas,context,'./newStack.png',3);
 
 moveHanoi(canvas,context,'./newStack.png',s,1,2);
 
