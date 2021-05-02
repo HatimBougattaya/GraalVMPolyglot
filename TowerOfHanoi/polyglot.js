@@ -6,8 +6,8 @@
 
 
 //IMPORT
-const {initiateTower,drawTowers,resDrawing} = require("../utilFunc/libTower");
-const {initiateStack,drawStacks,loadDestination,move}= require("../utilFunc/libStack") ;
+const {initiateTower,drawTowers,resDrawing} = require("./utilFunc/libTower");
+const {initiateStack,drawStacks,loadDestination,move}= require("./utilFunc/libStack") ;
 
 const {drawHanoi,moveHanoi} = require("./utilFunc/drawImg");
 
@@ -51,4 +51,4 @@ myHanoi.watch("changes",function(id, old, cur) {
 //LETS GO
 myHanoi.tower(stacks,1,2,3);
 
-//console.log("Moveent done :" + movements);
+//console.log("Movements done :" + movements);
